@@ -1,8 +1,8 @@
 <template>
   <div>
     <v-container fluid>
-      <v-layout row>
-        <v-flex xs12>
+      <v-row>
+        <v-col cols="12">
           <v-carousel>
             <v-carousel-item
               v-for="ad in ads"
@@ -10,21 +10,22 @@
               :src="ad.src"
             >
               <div class="ad-link">
-                <v-btn class="error" :to="'/ad/' + ad.id">
+                <v-btn color="error" :to="'/ad/' + ad.id">
                   {{ ad.title }}
                 </v-btn>
               </div>
             </v-carousel-item>
           </v-carousel>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
-    <v-container grid-list-lg>
-      <v-layout row wrap>
-        <v-flex
-          xs12
-          sm6
-          md4
+
+    <v-container>
+      <v-row>
+        <v-col
+          cols="12"
+          sm="6"
+          md="4"
           v-for="ad in ads"
           :key="ad.id"
         >
@@ -32,25 +33,24 @@
             <v-img
               :src="ad.src"
               height="200px"
+              cover
             ></v-img>
-            <v-card-title primary-title>
-              <div>
-                <h3 class="headline mb-0">{{ ad.title }}</h3>
-                <div>{{ ad.desc }}</div>
-              </div>
+            <v-card-title>
+              <h3 class="headline mb-0">{{ ad.title }}</h3>
+              <div>{{ ad.desc }}</div>
             </v-card-title>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn text :to="'/ad/' + ad.id">
+              <v-btn variant="text" :to="'/ad/' + ad.id">
                 Open
               </v-btn>
-              <v-btn raised color="primary">
+              <v-btn color="primary">
                 Buy
               </v-btn>
             </v-card-actions>
           </v-card>
-        </v-flex>
-      </v-layout>
+        </v-col>
+      </v-row>
     </v-container>
   </div>
 </template>
