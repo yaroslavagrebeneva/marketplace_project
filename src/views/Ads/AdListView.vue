@@ -1,41 +1,35 @@
-
 <template>
-  <v-container>
-    <v-row justify="center">
-      <v-col cols="12" sm="8" lg="6">
+    <v-container>
         <h1 class="text--secondary mb-3 mt-3">My ads</h1>
-        <v-card v-for="ad in ads" :key="ad.id" class="mb-3" max-width="1000">
-          <v-row>
-              <v-col xs="4">
-                  <v-img :src="ad.src" height="175px" cover></v-img>
-              </v-col>
-              <v-col xs="8">
-                  <h2 class="text--primary">{{  }}</h2>
-                  <p style="height: 85px; overflow: hidden; text-overflow: ellipsis;">{{  }}</p>
-                  <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="primary" variant="text" :to="Open">
-                          Open
-                      </v-btn>
-                  </v-card-actions>
-              </v-col>
-          </v-row>
-        </v-card>>
-      </v-col>
-    </v-row>
-  </v-container>
+        <v-card class="elevation-10 mb-5" v-for="ad in myAds" :key="ad.id">
+            <v-row>
+                <v-img :src="ad.src" height="175px"></v-img>
+                <v-spacer></v-spacer>
+            </v-row>
+            <v-row>
+                <v-card-text>
+                    <h2 class="text--primary">{{ ad.title }}</h2>
+                    <p>{{ ad.desc }}</p>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" variant="text" :to="'/ad/' + ad.id">
+                        Open
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                </v-card-actions>
+            </v-row>
+        </v-card>
+    </v-container>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      title: "",
-    desc:"",
-    promo: true,
-    src: "",
-    id:""
+    computed: {
+        myAds() {
+            return this.$store.getters.myAds
+        }
     }
-  }
-}
+
+};
 </script>
