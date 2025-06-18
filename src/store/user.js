@@ -16,14 +16,33 @@ export default {
   mutations: {
     setUser(state, payload) {
       console.log(payload); // Логирование данных пользователя
-      state.user = payload; // Установка пользователя в состояние
+      state.user = payload; // Установка пользователя
     }
   },
   // Действия для обработки логики
   actions: {
-    registerUser({ commit }, { email, password }) {
-      // Здесь будет запрос на сервер для регистрации
-      commit('setUser', new User(1, email, password)); // Создание и установка пользователя
+    async registerUser({ commit }, { email, password }) {
+      commit('clearError'); // Очистка ошибки
+      commit('setLoading', true); // Включение лоудера
+
+      // Имитация запроса на сервер
+      let isRequestOk = false; // Симуляция неуспешного запроса (можно изменить для теста)
+      let promise = new Promise(function(resolve) {
+        setTimeout(() => resolve('Done'), 3000);
+      });
+
+      if (isRequestOk) {
+        await promise.then(() => {
+          commit('setUser', new User(1, email, password)); // Установка пользователя
+          commit('setLoading', false); // Отключение лоудера
+        });
+      } else {
+        await promise.then(() => {
+          commit('setLoading', false); // Отключение лоудера
+          commit('setError', 'Ошибка регистрации'); // Установка ошибки
+          throw 'Ошибка регистрации'; // Бросаем ошибку
+        });
+      }
     }
   },
   // Геттеры для получения данных
