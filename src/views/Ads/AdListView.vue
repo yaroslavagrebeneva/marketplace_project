@@ -1,33 +1,36 @@
 <template>
     <v-container>
-      <v-row justify="center">
-        <v-col cols="12" sm="8" lg="6">
-          <h1 class="text--secondary mb-3 mt-3">My Ads</h1>
+      <v-row>
+        <v-col cols="12">
+          <v-card class="mt-5">
+            <!-- Картинка с растяжением по ширине, сохраняющая пропорции -->
+            <v-img
+              :src="'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg'"
+              class="d-block"
+              height="300px"
+              contain
+            ></v-img>
   
-          <!-- Перебор массива ads для отображения каждого объявления -->
-          <v-card v-for="ad in ads" :key="ad.id" class="mb-3" max-width="1000">
-            <v-row>
-              <!-- Блок с изображением -->
-              <v-col xs="4">
-                <v-img :src="ad.src" height="175px" cover />
-              </v-col>
+            <!-- Текст -->
+            <v-card-text>
+              <h1 class="text--primary mb-3">Lorem Ipsum</h1>
+              <p>
+                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                It has survived not only five centuries, but also the leap into electronic typesetting,
+                remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset
+                sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
+                Aldus PageMaker including versions of Lorem Ipsum.
+              </p>
+            </v-card-text>
   
-              <!-- Блок с текстом (заголовок, описание и кнопка) -->
-              <v-col xs="8">
-                <h2 class="text--primary">{{ ad.title }}</h2>
-                <!-- Обрезаем описание, если оно слишком длинное -->
-                <p style="height: 85px; overflow: hidden; text-overflow: ellipsis;">
-                  {{ ad.desc }}
-                </p>
-  
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" variant="text" :to="'/ad/' + ad.id">
-                    Open
-                  </v-btn>
-                </v-card-actions>
-              </v-col>
-            </v-row>
+            <!-- Кнопки действия -->
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <!-- Кнопки с цветным фоном -->
+              <v-btn color="warning" class="white--text">Edit</v-btn>
+              <v-btn color="success" class="white--text">Buy</v-btn>
+            </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
@@ -37,43 +40,16 @@
   <script>
   export default {
     data() {
-      return {
-        ads: [
-          {
-            title: "First",
-            desc: "First Desc. This is a longer description for testing purposes. It is much longer than other descriptions to see how it behaves in the layout and makes sure everything works correctly.",
-            promo: true,
-            src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-            id: "1"
-          },
-          {
-            title: "Second",
-            desc: "Second Desc",
-            promo: true,
-            src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-            id: "2"
-          },
-          {
-            title: "Third",
-            desc: "Third Desc",
-            promo: true,
-            src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-            id: "3"
-          },
-          {
-            title: "Fouth",
-            desc: "Fouth Desc",
-            promo: true,
-            src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-            id: "4"
-          }
-        ]
-      };
+      return {};
     }
   };
   </script>
   
   <style scoped>
-  /* Стили для карточек объявлений */
+  /* Добавление стиля для растягивания изображения */
+  .v-img {
+    width: 100%; /* Это гарантирует, что картинка растягивается на 100% ширины контейнера */
+    object-fit: contain; /* Сохраняет пропорции картинки */
+  }
   </style>
   
