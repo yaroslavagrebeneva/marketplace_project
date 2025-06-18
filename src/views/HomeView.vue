@@ -1,98 +1,62 @@
 <template>
-  <div>
-    <v-container fluid>
-      <v-row>
-        <v-col cols="12">
-          <v-carousel>
-            <v-carousel-item
-              v-for="ad in ads"
-              :key="ad.id"
-              :src="ad.src"
-            >
-              <div class="ad-link">
-                <v-btn color="error" :to="'/ad/' + ad.id">
-                  {{ ad.title }}
-                </v-btn>
-              </div>
-            </v-carousel-item>
-          </v-carousel>
-        </v-col>
-      </v-row>
-    </v-container>
+  <v-container>
+    <!-- Карусель объявлений -->
+    <v-row justify="center">
+      <v-col cols="12">
+        <v-carousel>
+          <v-carousel-item
+            v-for="ad in promoAds"
+            :key="ad.id"
+            :src="ad.src"
+          ></v-carousel-item>
+        </v-carousel>
+      </v-col>
+    </v-row>
 
-    <v-container>
-      <v-row>
-        <v-col
-          cols="12"
-          sm="6"
-          md="4"
-          v-for="ad in ads"
-          :key="ad.id"
-        >
-          <v-card>
-            <v-img
-              :src="ad.src"
-              height="200px"
-              cover
-            ></v-img>
-            <v-card-title>
-              <h3 class="headline mb-0">{{ ad.title }}</h3>
-              <div>{{ ad.desc }}</div>
-            </v-card-title>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn variant="text" :to="'/ad/' + ad.id">
-                Open
-              </v-btn>
-              <v-btn color="primary">
-                Buy
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+    <!-- Grid объявлений -->
+    <v-row>
+      <v-col
+        v-for="ad in ads"
+        :key="ad.id"
+        xs="12"
+        sm="6"
+        md="4"
+      >
+        <v-card>
+          <v-img 
+            :src="ad.src" 
+            :lazy-src="ad.src"
+            height="200px"
+            contain
+          ></v-img>
+          <v-card-title>
+            <h3 class="headline mb-1">{{ ad.title }}</h3>
+            <p>{{ ad.desc }}</p>
+          </v-card-title>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text :to="'/ad/' + ad.id">Open</v-btn>
+            <v-btn color="primary">Buy</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      ads: [
-        {
-          title: "First",
-          desc: "First Desc",
-          promo: true,
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-          id: "1"
-        },
-        {
-          title: "Second",
-          desc: "Second Desc",
-          promo: true,
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
-          id: "2"
-        },
-        {
-          title: "Third",
-          desc: "Third Desc",
-          promo: true,
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
-          id: "3"
-        },
-        {
-          title: "Fourth",
-          desc: "Fourth Desc",
-          promo: true,
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
-          id: "4"
-        }
-      ]
-    };
+  computed: {
+    promoAds() {
+      return this.$store.getters.promoAds;
+    },
+    ads() {
+      return this.$store.getters.ads;
+    }
   }
-};
+}
 </script>
+
 
 <style scoped>
 .ad-link {
@@ -102,7 +66,6 @@ export default {
   background: rgba(0, 0, 0, 0.5);
   transform: translate(-50%, 0);
   padding: 5px 15px;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+  border-radius: 5px;
 }
 </style>
