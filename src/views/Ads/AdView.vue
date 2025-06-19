@@ -1,26 +1,16 @@
 <template>
-  <!-- Контейнер для карточки объявления -->
   <v-container>
-    <v-row>
-      <v-col cols="12">
-        <v-card class="mt-5">
-          <!-- Изображение объявления -->
-          <v-img
-            height="400px"
-            :src="ad.src"
-            cover
-          ></v-img>
-          <v-card-text>
-            <!-- Заголовок объявления -->
-            <h1 class="text--primary mb-3">{{ ad.title }}</h1>
-            <!-- Описание объявления -->
-            <p>{{ ad.desc }}</p>
+    <v-row justify="center">
+      <v-col cols="uyorum2" md="8">
+        <v-card class="mt-5 pa-4">
+          <v-img :src="ad.src" height="300px" class="rounded-lg"></v-img>
+          <v-card-text class="text-center">
+            <h1 class="text-h4 font-weight-bold mb-3">{{ ad.title }}</h1>
+            <p class="text-body-1 text--secondary">{{ ad.desc }}</p>
           </v-card-text>
-          <v-card-actions>
-            <!-- Кнопки действий -->
-            <v-spacer></v-spacer>
-            <v-btn class="warning" color="orange">Edit</v-btn>
-            <v-btn class="success" color="green">Buy</v-btn>
+          <v-card-actions class="justify-end">
+            <modal-dialog :ad="ad" v-if="isOwner"></modal-dialog>
+            <v-btn color="success" class="ml-2">Buy</v-btn>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -29,20 +19,27 @@
 </template>
 
 <script>
-// Компонент для отображения деталей объявления
+import EditAdModal from './EditAdModal';
+
 export default {
-  // Пустой объект data
-  data() {
-    return {};
-  },
-  // Получение id из маршрута
   props: ['id'],
   computed: {
-    // Получение объявления по id из хранилища
     ad() {
-      const id = this.id;
-      return this.$store.getters.adById(id) || {};
-    }
-  }
+      return this.$store.getters.adById(this.id) || {};
+    },
+    isOwner() {
+      return this.ad && this.$store.getters.user && this.ad.userId === this.$store.getters.user.id;
+    },
+  },
+  components: {
+    'modal-dialog': EditAdModal,
+  },
 };
 </script>
+
+<style scoped>
+.text--secondary {
+  color: rgba(0, 0, 0, 0.7);
+  line-height: 1.6;
+}
+</style>
