@@ -26,7 +26,7 @@ export default {
       commit('setLoading', true); // Включение лоудера
 
       // Имитация запроса на сервер
-      let isRequestOk = false; // Симуляция неуспешного запроса (можно изменить для теста)
+      let isRequestOk = false; // Симуляция неуспешного запроса
       let promise = new Promise(function(resolve) {
         setTimeout(() => resolve('Done'), 3000);
       });
@@ -40,7 +40,30 @@ export default {
         await promise.then(() => {
           commit('setLoading', false); // Отключение лоудера
           commit('setError', 'Ошибка регистрации'); // Установка ошибки
-          throw 'Ошибка регистрации'; // Бросаем ошибку
+          throw 'Упс... Ошибка регистрации'; // Бросаем ошибку
+        });
+      }
+    },
+    async loginUser({ commit }, { email, password }) {
+      commit('clearError'); // Очистка ошибки
+      commit('setLoading', true); // Включение лоудера
+
+      // Имитация запроса на сервер
+      let isRequestOk = false; // Симуляция неуспешного запроса
+      let promise = new Promise(function(resolve) {
+        setTimeout(() => resolve('Done'), 3000);
+      });
+
+      if (isRequestOk) {
+        await promise.then(() => {
+          commit('setUser', new User(1, email, password)); // Установка пользователя
+          commit('setLoading', false); // Отключение лоудера
+        });
+      } else {
+        await promise.then(() => {
+          commit('setLoading', false); // Отключение лоудера
+          commit('setError', 'Ошибка логина или пароля'); // Установка ошибки
+          throw 'Упс... Ошибка логина или пароля'; // Бросаем ошибку
         });
       }
     }

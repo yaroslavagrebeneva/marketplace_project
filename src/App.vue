@@ -1,4 +1,3 @@
-
 <template>
   <v-app>
     <!-- Боковое меню -->
@@ -39,14 +38,34 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+
+    <!-- Снекбар для отображения ошибок -->
+    <v-snackbar
+      v-model="error"
+      multi-line
+      :timeout="2000"
+      color="primary"
+    >
+      {{ error }}
+
+      <template v-slot:actions>
+        <v-btn
+          variant="text"
+          @click="closeError"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
+// Компонент корневого приложения
 export default {
   data() {
     return {
-      drawer: false,
+      drawer: false, // Управление боковым меню
       links: [
         { title: "Login", icon: "mdi-lock", url: "/login" },
         { title: "Registration", icon: "mdi-face", url: "/registration" },
@@ -55,6 +74,24 @@ export default {
         { title: "My ads", icon: "mdi-view-list-outline", url: "/list" }
       ]
     };
+  },
+  computed: {
+    // Получение ошибки из store
+    error: {
+      get() {
+        return this.$store.getters.error;
+      },
+      set() {
+        // При закрытии снекбара очищаем ошибку
+        this.$store.dispatch('clearError');
+      }
+    }
+  },
+  methods: {
+    // Метод для закрытия снекбара
+    closeError() {
+      this.$store.dispatch('clearError'); // Очистка ошибки
+    }
   }
 };
 </script>
