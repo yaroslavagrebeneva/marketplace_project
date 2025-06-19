@@ -1,4 +1,3 @@
-// Класс для представления пользователя
 class User {
   constructor(id, email, password) {
     this.id = id;
@@ -8,70 +7,70 @@ class User {
 }
 
 export default {
-  // Состояние модуля пользователя
   state: {
-    user: null // Хранит данные пользователя
+    user: null,
   },
-  // Мутации для изменения состояния
   mutations: {
     setUser(state, payload) {
-      console.log(payload); // Логирование данных пользователя
-      state.user = payload; // Установка пользователя
-    }
+      console.log('setUser payload:', payload);
+      state.user = payload;
+    },
   },
-  // Действия для обработки логики
   actions: {
     async registerUser({ commit }, { email, password }) {
-      commit('clearError'); // Очистка ошибки
-      commit('setLoading', true); // Включение лоудера
+      commit('clearError');
+      commit('setLoading', true);
 
-      // Имитация запроса на сервер
-      let isRequestOk = false; // Симуляция неуспешного запроса
-      let promise = new Promise(function(resolve) {
-        setTimeout(() => resolve('Done'), 3000);
+      const promise = new Promise((resolve) => {
+        setTimeout(() => resolve('Done'), 1000);
       });
 
+      let isRequestOk = true;
+
       if (isRequestOk) {
-        await promise.then(() => {
-          commit('setUser', new User(1, email, password)); // Установка пользователя
-          commit('setLoading', false); // Отключение лоудера
-        });
+        await promise;
+        commit('setUser', new User(1, email, password));
+        commit('setLoading', false);
       } else {
-        await promise.then(() => {
-          commit('setLoading', false); // Отключение лоудера
-          commit('setError', 'Ошибка регистрации'); // Установка ошибки
-          throw 'Упс... Ошибка регистрации'; // Бросаем ошибку
-        });
+        await promise;
+        commit('setLoading', false);
+        commit('setError', 'Ошибка регистрации');
+        throw new Error('Упс... Ошибка регистрации');
       }
     },
-    async loginUser({ commit }, { email, password }) {
-      commit('clearError'); // Очистка ошибки
-      commit('setLoading', true); // Включение лоудера
 
-      // Имитация запроса на сервер
-      let isRequestOk = false; // Симуляция неуспешного запроса
-      let promise = new Promise(function(resolve) {
-        setTimeout(() => resolve('Done'), 3000);
+    async loginUser({ commit }, { email, password }) {
+      commit('clearError');
+      commit('setLoading', true);
+
+      const promise = new Promise((resolve) => {
+        setTimeout(() => resolve('Done'), 1000);
       });
 
+      let isRequestOk = true;
+
       if (isRequestOk) {
-        await promise.then(() => {
-          commit('setUser', new User(1, email, password)); // Установка пользователя
-          commit('setLoading', false); // Отключение лоудера
-        });
+        await promise;
+        commit('setUser', new User(1, email, password));
+        commit('setLoading', false);
       } else {
-        await promise.then(() => {
-          commit('setLoading', false); // Отключение лоудера
-          commit('setError', 'Ошибка логина или пароля'); // Установка ошибки
-          throw 'Упс... Ошибка логина или пароля'; // Бросаем ошибку
-        });
+        await promise;
+        commit('setLoading', false);
+        commit('setError', 'Ошибка логина или пароля');
+        throw new Error('Упс... Ошибка логина или пароля');
       }
-    }
+    },
+
+    logoutUser({ commit }) {
+      commit('setUser', null);
+    },
   },
-  // Геттеры для получения данных
   getters: {
     user(state) {
       return state.user;
-    }
-  }
+    },
+    isUserLoggedIn(state) {
+      return state.user !== null;
+    },
+  },
 };

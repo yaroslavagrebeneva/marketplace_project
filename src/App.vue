@@ -8,8 +8,21 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list density="compact">
-        <v-list-item v-for="link in links" :key="link.title" :to="link.url" :prepend-icon="link.icon">
+        <v-list-item
+          v-for="link in links"
+          :key="link.title"
+          :to="link.url"
+          :prepend-icon="link.icon"
+        >
           <v-list-item-title>{{ link.title }}</v-list-item-title>
+        </v-list-item>
+
+        <!-- Logout в дровере -->
+        <v-list-item @click="onLogout" v-if="isUserLoggedIn">
+          <template v-slot:prepend>
+            <v-icon icon="mdi-exit-to-app"></v-icon>
+          </template>
+          <v-list-item-title>Logout</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -18,7 +31,6 @@
     <v-app-bar color="primary" dark>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <!-- Ссылка на главную страницу -->
       <v-toolbar-title>
         <v-btn to="/" variant="text">Home</v-btn>
       </v-toolbar-title>
@@ -27,9 +39,20 @@
 
       <!-- Верхнее меню -->
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn v-for="link in links" :key="link.title" :to="link.url" variant="text">
-          <v-icon start>{{ link.icon }}</v-icon>
+        <v-btn
+          v-for="link in links"
+          :key="link.title"
+          :to="link.url"
+          variant="text"
+        >
+          <v-icon start :icon="link.icon"></v-icon>
           {{ link.title }}
+        </v-btn>
+
+        <!-- Logout в верхнем меню -->
+        <v-btn @click="onLogout" v-if="isUserLoggedIn">
+          <v-icon start icon="mdi-exit-to-app"></v-icon>
+          Logout
         </v-btn>
       </v-toolbar-items>
     </v-app-bar>
@@ -39,59 +62,74 @@
       <router-view></router-view>
     </v-main>
 
-    <!-- Снекбар для отображения ошибок -->
+    <!-- Снекбар для ошибок -->
     <v-snackbar
-      v-model="error"
+      v-model="showSnackbar"
       multi-line
       :timeout="2000"
-      color="primary"
+      color="error"
     >
-      {{ error }}
-
+      {{ $store.getters.error }}
       <template v-slot:actions>
-        <v-btn
-          variant="text"
-          @click="closeError"
-        >
-          Close
-        </v-btn>
+        <v-btn variant="text" @click="closeError">Close</v-btn>
       </template>
     </v-snackbar>
   </v-app>
 </template>
 
 <script>
-// Компонент корневого приложения
 export default {
   data() {
     return {
-      drawer: false, // Управление боковым меню
-      links: [
-        { title: "Login", icon: "mdi-lock", url: "/login" },
-        { title: "Registration", icon: "mdi-face", url: "/registration" },
-        { title: "Orders", icon: "mdi-bookmark-multiple-outline", url: "/orders" },
-        { title: "New ad", icon: "mdi-note-plus-outline", url: "/new" },
-        { title: "My ads", icon: "mdi-view-list-outline", url: "/list" }
-      ]
+      drawer: false,
+      showSnackbar: false,
     };
   },
   computed: {
-    // Получение ошибки из store
-    error: {
-      get() {
-        return this.$store.getters.error;
-      },
-      set() {
-        // При закрытии снекбара очищаем ошибку
-        this.$store.dispatch('clearError');
+    isUserLoggedIn() {
+      return this.$store.getters.isUserLoggedIn;
+    },
+    links() {
+      if (this.isUserLoggedIn) {
+        return [
+          {
+            title: 'Orders',
+            icon: 'mdi-bookmark-multiple-outline',
+            url: '/orders',
+          },
+          {
+            title: 'New ad',
+            icon: 'mdi-note-plus-outline',
+            url: '/new',
+          },
+          {
+            title: 'My ads',
+            icon: 'mdi-view-list-outline',
+            url: '/list',
+          },
+        ];
+      } else {
+        return [
+          { title: 'Login', icon: 'mdi-lock', url: '/login' },
+          { title: 'Registration', icon: 'mdi-face', url: '/registration' },
+        ];
       }
-    }
+    },
+  },
+  watch: {
+    '$store.getters.error'(newValue) {
+      this.showSnackbar = !!newValue;
+    },
   },
   methods: {
-    // Метод для закрытия снекбара
     closeError() {
-      this.$store.dispatch('clearError'); // Очистка ошибки
-    }
-  }
+      this.$store.dispatch('clearError');
+      this.showSnackbar = false;
+    },
+    onLogout() {
+      this.$store.dispatch('logoutUser');
+      this.$router.push('/');
+    },
+  },
 };
 </script>

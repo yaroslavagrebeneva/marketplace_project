@@ -1,40 +1,36 @@
 export default {
-  // Состояние для управления запросами
   state: {
-    loading: false, // Статус загрузки
-    error: null // Ошибка запроса
+    loading: false,
+    error: null,
   },
-  // Мутации для изменения состояния
   mutations: {
     setLoading(state, payload) {
-      state.loading = payload; // Установка статуса загрузки
+      state.loading = payload;
     },
     setError(state, payload) {
-      state.error = payload; // Установка ошибки
+      state.error = payload;
     },
     clearError(state) {
-      state.error = null; // Очистка ошибки
-    }
+      state.error = null;
+    },
   },
-  // Действия для вызова мутаций
   actions: {
     setLoading({ commit }, payload) {
-      commit('setLoading', payload); // Установка статуса загрузки
+      commit('setLoading', payload);
     },
     setError({ commit }, payload) {
-      commit('setError', payload); // Установка ошибки
+      commit('setError', payload);
     },
     clearError({ commit }) {
-      commit('clearError'); // Очистка ошибки
-    }
+      commit('clearError');
+    },
   },
-  // Геттеры для доступа к состоянию
   getters: {
     loading(state) {
-      return state.loading; // Получение статуса загрузки
+      return state.loading;
     },
     error(state) {
-      return state.error; // Получение ошибки
-    }
-  }
+      return state.error;
+    },
+  },
 };
