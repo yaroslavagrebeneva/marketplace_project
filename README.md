@@ -1,17 +1,52 @@
-<h2>  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExenNrbjdva3c4ZHdvaWw4dzB1dmt1ZWI2eWg0ZHFhb2IwcW93cm5laCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/iOFSGSk5W7GoDUo92p/giphy.gif" width="160px"/> <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Abril+Fatface&size=30&pause=100&color=000000&background=E17F0439&vCenter=true&width=300&height=40&lines=yasya_vue_marketplace_project" alt="Typing SVG" /></a> </h2>
+# 📚 KIPU – Учебный проект на Vue.js + Vuetify
 
-Данный фронт на  Vue CLI 3 in Vite.
-## Установка
-```sh
-npm install
-```
-### Компиляция(старт)
-```sh
-npm run dev
-```
+Этот проект — платформа с объявлениями, выполненная на основе **Vue.js** и **Vuetify**. Проект включает в себя аутентификацию, отображение рекламы, навигационное меню и динамическую карусель с карточками.
 
-<h2>  <img src="https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExenNrbjdva3c4ZHdvaWw4dzB1dmt1ZWI2eWg0ZHFhb2IwcW93cm5laCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/iOFSGSk5W7GoDUo92p/giphy.gif" width="160px"/> <a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.herokuapp.com?font=Abril+Fatface&size=30&pause=100&color=000000&background=E17F0439&vCenter=true&width=300&height=40&lines=View" alt="Typing SVG" /></a> </h2>
+---
+
+## 🔧 Технологии
+
+- ⚙️ **Vue.js** — современный JavaScript-фреймворк
+- 🎨 **Vuetify** — UI-библиотека по Material Design
+- 🔄 **Vue Router** — маршрутизация
+- 📦 **Vuex** — глобальное хранилище
+
+---
+
+## 📸 Скриншот
 
 <p>
-  <img src="https://github.com/yaroslavagrebeneva/marketplace_project/blob/3f8c4a25c6b0e29a65eb77595615a361d1eb5f5b/Screenshot_1.png" width="700px"/>
-</p>
+  <img src="https://github.com/yaroslavagrebeneva/marketplace_project/blob/625a1fdba252de6342fe945d567ee80c2ca0b36f/Screenshot_3.jpg"/>
+</p> 
+<p>
+  <img src="https://github.com/yaroslavagrebeneva/marketplace_project/blob/625a1fdba252de6342fe945d567ee80c2ca0b36f/Screenshot_4.jpg"/>
+</p> 
+<p>
+  <img src="https://github.com/yaroslavagrebeneva/marketplace_project/blob/625a1fdba252de6342fe945d567ee80c2ca0b36f/Screenshot_5.jpg"/>
+</p> 
+
+---
+
+## 🧩 Функции
+
+- 🔐 Авторизация и регистрация пользователей
+- 📋 Разное меню для гостей и авторизованных пользователей
+- 📦 Просмотр и покупка объявлений
+- 🖼️ Карусель с рекламными баннерами
+- 📄 Объявления в виде карточек
+- ⚠️ Вывод ошибок через snackbar
+- 🚪 Logout с автоматическим редиректом
+
+---
+
+## 🚀 Запуск проекта
+
+```bash
+npm install
+npm run serve
+```
+Убедись, что у тебя установлен Node.js и Vue CLI.
+
+
+
+
